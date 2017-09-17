@@ -10,10 +10,17 @@ import java.io.FileNotFoundException;
 
 public class TestSeleium {
     WebDriver driver;
+    File fileGeckodriver;
 
     @Before
     public void setUp() throws FileNotFoundException {
-        File fileGeckodriver = new File("/tmp/geckodriver");
+
+        if(System.getProperty("os.name").equals("Linux")){
+            fileGeckodriver = new File("/opt/geckodriver");
+        }else {
+            fileGeckodriver = new File("C:/Libs/");
+        }
+
         if (fileGeckodriver.exists()){
             System.setProperty("webdriver.gecko.driver", fileGeckodriver.getAbsolutePath());
         }else {
@@ -31,6 +38,6 @@ public class TestSeleium {
 
     @After
     public void close(){
-//        driver.close();
+        driver.close();
     }
 }
